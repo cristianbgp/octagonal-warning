@@ -15,6 +15,8 @@ function App() {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "space-around",
+    height: "90vh",
     maxWidth: "600px",
     margin: "0 auto"
   };
@@ -81,8 +83,6 @@ function App() {
   };
 
   const styleFooter = {
-    position: "fixed",
-    bottom: "30px",
     fontSize: "1.3em"
   };
 
