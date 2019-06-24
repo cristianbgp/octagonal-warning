@@ -2,12 +2,23 @@
 import React from "react";
 import { ReactComponent as Octagon } from "./octagon.svg";
 import { jsx } from "@emotion/core";
+import domtoimage from "dom-to-image";
+import { saveAs } from "file-saver";
 
 function App() {
   const [info, SetInfo] = React.useState("ALTO EN");
+  const octagonContainer = React.useRef(null);
 
   function handleChange(event) {
     SetInfo(event.target.value);
+  }
+
+  function handleClick() {
+    domtoimage
+      .toBlob(octagonContainer.current, { quality: 1 })
+      .then(function(blob) {
+        saveAs(blob, `octagon-${info}.png`);
+      });
   }
 
   const styleAppContainer = {
@@ -93,10 +104,20 @@ function App() {
     cursor: "pointer"
   };
 
+  const styleButtonDownload = {
+    border: "none",
+    background: "black",
+    color: "white",
+    borderRadius: "5px",
+    padding: "10px",
+    fontSize: "1em",
+    cursor: "pointer"
+  };
+
   return (
     <div css={styleAppContainer}>
       <h1 css={styleTitle}>OCTAGONAL WARNING</h1>
-      <div css={styleOctagonContainer}>
+      <div ref={octagonContainer} css={styleOctagonContainer}>
         <div css={styleContainerSVG}>
           <Octagon />
         </div>
@@ -113,6 +134,9 @@ function App() {
         css={styleTextArea}
         placeholder="The text inside the octagone goes here"
       />
+      <button onClick={handleClick} css={styleButtonDownload}>
+        Download
+      </button>
       <div css={styleFooter}>
         <span>
           Created by{" "}
